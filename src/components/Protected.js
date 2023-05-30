@@ -8,7 +8,7 @@ const Protected = (props) => {
     useEffect(()=>{
         let isUserloggedIn = false;
         if(!isUserloggedIn){
-            navigate('/login');
+            navigate('/');
             isUserloggedIn = true;
         } 
     },[])

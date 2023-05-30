@@ -37,10 +37,7 @@ const Register = () => {
 
   function handleSubmit() {
     const existingData = JSON.parse(localStorage.getItem('registrationData')) || [];
-
     const newData = [...existingData, formData];
-
-    
     localStorage.setItem('registrationData', JSON.stringify(newData));
     navigate('/login');
   }

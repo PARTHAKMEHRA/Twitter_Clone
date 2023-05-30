@@ -26,11 +26,28 @@ const style = {
 
 export default function Login() {
   const [open, setOpen] = React.useState(true);
+  const [email, setEmail]=React.useState("");
+  const [loginError, setLoginError]=React.useState("");
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
+  const usersData=JSON.parse(localStorage.getItem("registrationData") || []) 
 
-  function handleSubmit(){
-    navigate('/')
+  function handleSubmit(e){
+    e.preventDefault();
+    const data=usersData.find((item,index)=>{
+      if(item.email===email){
+        return item;
+  
+      }
+      
+    })
+    if(data){
+      navigate('/')
+    }
+    else{
+      setLoginError("user is not registed");
+    }
+    
   }
 
   return (
@@ -66,14 +83,19 @@ export default function Login() {
 
 
             <div className={styles.info}>
-                <input type="email" placeholder='Phone,email or username' required/>
+                <input type="email" placeholder='Phone,email or username' required
+                onChange={(e)=>setEmail(e.target.value)}
+                />
             </div>
 
             <div className={styles.button}>
                 <button id={styles.next} onClick={handleSubmit}>Next</button>
-                <button id={styles.fpass}>Forget Password</button>
-            </div>
 
+                <button id={styles.fpass}>Forget Password</button>
+
+            </div>
+            <p>{loginError}</p>
+            
 
             <div className={styles.not_account}>
                 <p>Don't have an account? <a><Link to="/signup">SignUp</Link></a></p>
