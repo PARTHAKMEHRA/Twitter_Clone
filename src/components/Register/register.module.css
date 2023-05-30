@@ -26,7 +26,7 @@
 
 
 .info input{
-    height: 50px;
+    height: 40px;
     width: 450px;
     border:1px solid #ccc;
     border-radius: 5px;
@@ -34,7 +34,7 @@
     color:black;
     font-weight: 400;
     font-size: 18px;
-    margin:15px 0;
+    margin:10px 0;
 }
 .info input::before{
     color:grey;
@@ -61,7 +61,7 @@
     flex-direction: column;
 }
 #next{
-    margin: 20px 0;
+    margin: 10px 0;
     width:450px;
     height: 40px;
     background-color: black;
@@ -77,9 +77,11 @@
 }
 .not_account{
     text-align: center;
+    margin-top: 10px;
+    margin-right: 50px;
 }
 
-.not_account a{
+.not_account span{
     color:rgb(11, 152, 217);
     text-decoration: underline;
 }

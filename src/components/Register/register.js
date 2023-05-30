@@ -1,5 +1,5 @@
 import React from "react";
-import{ useState } from"react";
+import { useState } from "react";
 import styles from './register.module.css';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -26,8 +26,41 @@ const Register= () => {
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
 
-  function handleSubmit(){
-    navigate('/login')
+  const [data, setData] = useState({
+    name:'',
+    email:'',
+    phone:'',
+    dob:'',
+    password:''
+  });
+
+  function handleChange(e){
+    setData({ ...data, [e.target.name]: e.target.value });
+  }
+
+  function handleSubmit(e){
+    e.preventDefault();
+
+    if(!data.name || !data.email || !data.phone || !data.dob || !data.password){
+      alert("please fill all the required details!")
+    }
+    else{
+
+        // Retrieve existing users from local storage
+        const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+    
+        // Add the new user to the existing users array
+        const updatedUsers = [...existingUsers, data];
+    
+        // Save the updated users array to local storage
+        localStorage.setItem('users', JSON.stringify(updatedUsers));
+    
+        alert('Registration Successful!')
+    
+        // Reset the form fields
+        setData({ name: '', email: '', phone: '', dob: '',password: '' });
+        navigate('/login')
+    }
   }
 
   return (
@@ -42,30 +75,33 @@ const Register= () => {
         <Box sx={style}>
         <div className={styles.container}>
 
-
+          <form onSubmit={handleSubmit}>
             <div className={styles.heading}>
                 <h2>Create your account</h2>
             </div>
 
 
             <div className={styles.info}>
-                <input type="name" placeholder='Name' required/>
-                <input type="email" placeholder='Email' required/>
-                <input type="number" placeholder='Phone' required/>
+                <input type="text" name="name" placeholder='Name' value={data.name} onChange={handleChange}/>
+                <input type="email" name="email" placeholder='Email' value={data.email} onChange={handleChange}/>
+                <input type="tel" name="phone" placeholder='Phone' value={data.phone} onChange={handleChange}/>
+                <input type="password" name="password" placeholder='Password' value={data.password} onChange={handleChange}/>
                 <label>Date of birth</label>
                 <p>This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</p>
-                <input type="date" placeholder='Month day and year' required/>
+                <input type="date" name="dob" placeholder='Month day and year' value={data.dob} onChange={handleChange}/>
 
             </div>
 
             <div className={styles.button}>
-                <button id={styles.next} onClick={handleSubmit}>Next</button>
+                <button id={styles.next} type="submit">Next</button>
             </div>
 
 
             <div className={styles.not_account}>
-                <p>Have an account? <a><Link to="/login">Login</Link></a></p>
+                <p>Have an account? <span><Link to="/login">Login</Link></span></p>
             </div>
+          </form>
+
         </div>
 
         </Box>

@@ -6,6 +6,7 @@ import google from './google.png';
 import apple from './apple.png';
 import styles from './login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 
 const style = {
@@ -18,9 +19,9 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-  border:'none',
-  outline:'none',
-  borderRadius:'15px'
+  border: 'none',
+  outline: 'none',
+  borderRadius: '15px'
 };
 
 
@@ -29,8 +30,35 @@ export default function Login() {
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
 
-  function handleSubmit(){
-    navigate('/')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  function handleEmailChange(e){
+    setEmail(e.target.value);
+  }
+
+  function handlePasswordChange(e){
+    setPassword(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if(!email || !password){
+      alert('please fill the required details');
+    }
+    else{
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      const user = users.find((user) => user.email === email && user.password === password);
+
+      if(user){
+        alert("Login Succesful!");
+        navigate('/');
+      }
+      else{
+        alert('Invalid email and password');
+      }
+    }
   }
 
   return (
@@ -42,43 +70,51 @@ export default function Login() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <div className={styles.container}>
-            <div className={styles.logo}>
-                <img src={logo} alt="twitter logo"/>
-            </div>
+          <div className={styles.container}>
+
+            <form onSubmit={handleSubmit}>
 
 
-            <div className={styles.heading}>
+              <div className={styles.logo}>
+                <img src={logo} alt="twitter logo" />
+              </div>
+
+
+              <div className={styles.heading}>
                 <h2>Sign in to Twitter</h2>
-            </div>
+              </div>
 
 
-            <div className={styles.signId}>
+              <div className={styles.signId}>
                 <div className={styles.google}>
-                    <img className={styles.google_image} src={google} alt='google logo'/>
-                    <span>Sign in with Google</span>
+                  <img className={styles.google_image} src={google} alt='google logo' />
+                  <span>Sign in with Google</span>
                 </div>
                 <div className={styles.apple}>
-                    <img src={apple} alt='apple logo'/>
-                    <span>Sign in with Apple</span>
+                  <img src={apple} alt='apple logo' />
+                  <span>Sign in with Apple</span>
                 </div>
-            </div>
+              </div>
 
 
-            <div className={styles.info}>
-                <input type="email" placeholder='Phone,email or username' required/>
-            </div>
+              <div className={styles.info}>
+                <input type="email" name='email' placeholder='Phone,email or username' onChange={handleEmailChange} value={email} />
+              </div>
+              <div className={styles.info}>
+                <input type="password" name='password' placeholder='Password' onChange={handlePasswordChange} value={password} />
+              </div>
 
-            <div className={styles.button}>
-                <button id={styles.next} onClick={handleSubmit}>Next</button>
+              <div className={styles.button}>
+                <button id={styles.next} type='submit'>Next</button>
                 <button id={styles.fpass}>Forget Password</button>
-            </div>
+              </div>
 
 
-            <div className={styles.not_account}>
-                <p>Don't have an account? <a><Link to="/signup">SignUp</Link></a></p>
-            </div>
-        </div>
+              <div className={styles.not_account}>
+                <p>Don't have an account? <span><Link to="/signup">SignUp</Link></span></p>
+              </div>
+            </form>
+          </div>
 
         </Box>
       </Modal>
