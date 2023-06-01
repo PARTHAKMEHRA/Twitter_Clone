@@ -16,6 +16,7 @@ import { useRecoilState } from "recoil";
 
 export default function Tweets() {
   const [tweets, setTweets] = useRecoilState(tweetAtom);
+  // Fetching data from tweet .json
   useEffect(() => {
     axios
       .get("/tweets.json")
