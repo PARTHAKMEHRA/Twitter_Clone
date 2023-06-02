@@ -30,7 +30,7 @@ export default function AddTweet() {
     commentCount: 0,
     reTweetsCount: 0,
     isLiked: false,
-  };
+  };// Handles the main tweet feeds
 
   function handleTweet() {  // this handling tweet section
     const newDummy = { ...dummyData };
