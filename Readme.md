@@ -30,10 +30,8 @@ Utilize hashtags and mentions to enhance content discovery and communication.
 Contributing
 Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request on the GitHub repository.
 
-
-
 Credits
-This app was developed by 
+This app was developed by
 1.Riya Singh
 2.Parthak Mehra
 3.Aniket Gawali
